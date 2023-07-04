@@ -44,14 +44,32 @@ cp .env.example .env
 docker-compose up -d --build
 ```
 To ingest traffic, it is recommended to create a shared bind mount with the docker-compose. One convenient way to set this up is as follows:
-1. On the vulnbox, start a rotating packet sniffer (e.g. tcpdump, suricata, ...)
-1. Using rsync, copy complete captures to the machine running tulip (e.g. to /traffic)
-1. Add a bind to the assembler service so it can read /traffic
+1. On the vulnbox, start a rotating packet sniffer (e.g. tcpdump, suricata, ...) (tcpdump example given below)
+2. Using rsync, copy complete captures to the machine running tulip (e.g. to /traffic)
+3. Add a bind to the assembler service so it can read /traffic
 
 The ingestor will use inotify to watch for new pcap's and suricata logs. No need to set a chron job.
 
 
-## Suricata synchronization
+## tcpdump
+First, you must know the network interface that the challenge is using. In ICC 2023, the network interface is named "game". You can check the network interfaces with:
+```
+ip addr
+```
+
+Then run the traffic sniffer with tcpdump:
+```
+tcpdump -i <interface> 'port <port>' -Z <user> -G 60 -w <filename>_%H_%M.pcap
+```
+
+Usually, i name the file captures/<service_name> to easily track the traces. can also add port.
+
+## rsync
+run
+```
+rsync -a <vm server>:captures/ <cwd>/services/traffic
+```
+in a 1 minute cron job
 
 ### Metadata
 Tags are read from the metadata field of a rule. For example, here's a simple rule to detect a path traversal:
@@ -92,3 +110,16 @@ When opening a pull request, please target the `devel` branch.
 
 # Credits
 Tulip was written by [@RickdeJager](https://github.com/rickdejager) and [@Bazumo](https://github.com/bazumo), with additional help from [@Sijisu](https://github.com/sijisu). Thanks to our fellow Team Europe players and coaches for testing, feedback and suggestions. Finally, thanks to the team behind [flower](https://github.com/secgroup/flower) for opensourcing their tooling.
+
+# TODO
+QoL things to add
+
+* Improve frontend
+    * Add more options for filtering
+* Add login page for security
+* Get a new VPS to run the service
+* Figure out command to sniff packets on windows server
+* for demo 3, we need to check if the flag can have different formats
+* Add tag for heap address, libc address, etc
+
+also edit this README

@@ -30,11 +30,9 @@ tick_length = os.getenv("TICK_LENGTH", 2*60*1000)
 start_date = os.getenv("TICK_START", "2018-06-27T13:00+02:00")
 mongo_host = os.getenv("TULIP_MONGO", "localhost:27017")
 mongo_server = f'mongodb://{mongo_host}/'
-vm_ip = "10.10.3.1"
+vm_ip = "34.80.189.185" # ICC 2023 has different ip for different service
 
-services = [{"ip": vm_ip, "port": 9876, "name": "cc_market"},
-            {"ip": vm_ip, "port": 80, "name": "maze"},
-            {"ip": vm_ip, "port": 8080, "name": "scadent"},
-            {"ip": vm_ip, "port": 5000, "name": "starchaser"},
-            {"ip": vm_ip, "port": 1883, "name": "scadnet_bin"},
-            {"ip": vm_ip, "port": -1, "name": "other"}]
+services = [{"ip": vm_ip, "port": 3003, "name": "closedsea_3003"},
+            {"ip": vm_ip, "port": 3004, "name": "closedsea_3004"},
+            {"ip": vm_ip, "port": 1337, "name": "rpn"},
+]
