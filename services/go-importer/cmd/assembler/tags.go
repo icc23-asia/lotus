@@ -53,5 +53,11 @@ func ApplyFlagTags(flow *db.FlowEntry, reg *string) {
 				flow.Tags = append(flow.Tags, tag)
 			}
 		}
+
+		// TODO: other tags
+		// Plan: 
+		//		seperate HTTP and regular tcp
+		// 		add a "libc leak" tag
+		//		some others idk
 	}
 }

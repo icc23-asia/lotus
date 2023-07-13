@@ -41,6 +41,7 @@ services:
       FLAG_REGEX: ${FLAG_REGEX}
       TICK_START: ${TICK_START}
       TICK_LENGTH: ${TICK_LENGTH}
+      PYTHONUNBUFFERED: 1
 
   assembler:
     build:

@@ -27,7 +27,7 @@ import base64
 def escape(i):
     if isinstance(i, str):
         i = ord(i)
-    ret = chr(i) if 0x20 <= i and i < 0x7f else f'\\x{i:02x}'
+    ret = chr(i) if 0x20 <= i and i < 0x7f else '\\n' if i == 0xa else f'\\x{i:02x}'
     if ret in '\\"':
         ret = '\\' + ret
     return ret
@@ -41,11 +41,11 @@ def flow2pwn(flow):
     port = flow["dst_port"]
 
     script = """from pwn import *
-import sys
 
-host = sys.argv[1]
-proc = remote(host, {})
-""".format(port)
+host = \"{}\"
+port = {}
+proc = remote(host, port)
+""".format(ip, port)
 
     for message in flow['flow']:
         data = base64.b64decode(message["b64"])

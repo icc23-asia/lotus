@@ -1,32 +1,13 @@
-# 🌷 Tulip
+# Lotus
 
-Tulip is a flow analyzer meant for use during Attack / Defence CTF competitions. It allows players to easily find some traffic related to their service and automatically generates python snippets to replicate attacks.
-
-## Origins
-Tulip was developed by Team Europe for use in the first International Cyber Security Challenge. The project is a fork of [flower](https://github.com/secgroup/flower), but it contains quite some changes:
-* New front-end (typescript / react / tailwind)
-* New ingestor code, based on gopacket
-* IPv6 support
-* Vastly improved filter and tagging system.
-* Deep links for easy collaboration
-* Added an http decoding pass for compressed data
-* Synchronized with Suricata.
-* Flow diffing
-* Time and size-based plots for correlation.
-* Linking HTTP sessions together based on cookies (Experimental, disabled by default)
-
-## Screenshots
-![](./demo_images/demo1.png)
-![](./demo_images/demo2.png)
-![](./demo_images/demo3.png)
+Lotus is a fork of [Tulip](https://github.com/OpenAttackDefenseTools/tulip), used by Team Asia for ICC 2023
 
 ## Configuration
 Before starting the stack, edit `services/configurations.py`:
 
 ```
-vm_ip = "10.60.4.1"
-services = [{"ip": vm_ip, "port": 18080, "name": "BIOMarkt"},
-            {"ip": vm_ip, "port": 5555, "name": "SaaS"},
+services = [{"ip": "10.60.3.1", "port": 3003, "name": "closedsea"},
+            {"ip": "10.61.3.1", "port": 1337, "name": "rpn"},
 ]
 ```
 
@@ -71,6 +52,8 @@ rsync -a <vm server>:captures/ <cwd>/services/traffic
 ```
 in a 1 minute cron job
 
+Todo: Find a way to sync consistently without cronjob, but tbh cronjob works fine
+
 ### Metadata
 Tags are read from the metadata field of a rule. For example, here's a simple rule to detect a path traversal:
 ```
@@ -109,7 +92,7 @@ If you have an idea for a new feature, bug fixes, UX improvements, or other cont
 When opening a pull request, please target the `devel` branch.
 
 # Credits
-Tulip was written by [@RickdeJager](https://github.com/rickdejager) and [@Bazumo](https://github.com/bazumo), with additional help from [@Sijisu](https://github.com/sijisu). Thanks to our fellow Team Europe players and coaches for testing, feedback and suggestions. Finally, thanks to the team behind [flower](https://github.com/secgroup/flower) for opensourcing their tooling.
+Lotus improvements and deployment was handled by [Zafirr](https://github.com/zafirr31), thanks to the creators of [Tulip](https://github.com/OpenAttackDefenseTools/tulip) for opensourcing their fork of [flower](https://github.com/secgroup/flower).
 
 # TODO
 QoL things to add
@@ -121,5 +104,3 @@ QoL things to add
 * Figure out command to sniff packets on windows server
 * for demo 3, we need to check if the flag can have different formats
 * Add tag for heap address, libc address, etc
-
-also edit this README
