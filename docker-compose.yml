@@ -41,6 +41,7 @@ services:
       FLAG_REGEX: ${FLAG_REGEX}
       TICK_START: ${TICK_START}
       TICK_LENGTH: ${TICK_LENGTH}
+      SLA_IP: ${SLA_IP}
       PYTHONUNBUFFERED: 1
 
   assembler:
@@ -58,6 +59,7 @@ services:
     environment:
       TULIP_MONGO: ${TULIP_MONGO}
       FLAG_REGEX: ${FLAG_REGEX}
+      SLA_IP: ${SLA_IP}
 
   enricher:
     build:

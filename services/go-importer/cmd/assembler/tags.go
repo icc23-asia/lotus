@@ -53,11 +53,24 @@ func ApplyFlagTags(flow *db.FlowEntry, reg *string) {
 				flow.Tags = append(flow.Tags, tag)
 			}
 		}
-
-		// TODO: other tags
-		// Plan: 
-		//		seperate HTTP and regular tcp
-		// 		add a "libc leak" tag
-		//		some others idk
 	}
 }
+
+// Apply Sla Tag for packets with source ip of SLA
+func ApplySlaTag(flow *db.FlowEntry, sla_ip *string) {
+
+	// If the sla ip is non existent, bail
+	if sla_ip == nil {
+		return
+	}
+
+	if flow.Src_ip == *sla_ip {
+		flow.Tags = append(flow.Tags, "sla")
+	}
+}
+
+// TODO: other tags
+// Plan: 
+// 		seperate HTTP and regular tcp
+// 		add a "libc leak" tag
+// 		some others idk

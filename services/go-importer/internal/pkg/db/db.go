@@ -70,6 +70,7 @@ func (db Database) ConfigureDatabase() {
 	db.InsertTag("blocked")
 	db.InsertTag("suricata")
 	db.InsertTag("starred")
+	db.InsertTag("sla")
 	db.ConfigureIndexes()
 }
 
