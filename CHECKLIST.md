@@ -1,7 +1,11 @@
 # Competition day checklist
 
 * Set the configs in .env
-    * MAKE SURE ABOUT THE TICK_START
+    * TICK_START
 * Make sure the configs have been set in configurations.py
-    * Check the ip is correct
-    * Check the port is correct
+    * Check the ip
+    * Check the port
+* Setup the tcpdump
+    * Set .ssh/config
+    * Set nohup on each vm
+    * Setup cron

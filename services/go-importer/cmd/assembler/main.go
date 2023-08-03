@@ -34,7 +34,6 @@ var promisc = true
 var watch_dir = flag.String("dir", "", "Directory to watch for new pcaps")
 var mongodb = flag.String("mongo", "", "MongoDB dns name + port (e.g. mongo:27017)")
 var flag_regex = flag.String("flag", "", "flag regex, used for flag in/out tagging")
-var sla_ip = flag.String("sla_ip", "", "SLA IP, used to tag packets with source ip from SLA")
 var nonstrict = flag.Bool("nonstrict", false, "Do not check strict TCP / FSM flags")
 var experimental = flag.Bool("experimental", false, "Enable experimental features.")
 
@@ -48,9 +47,7 @@ func reassemblyCallback(entry db.FlowEntry) {
 	if *flag_regex != "" {
 		ApplyFlagTags(&entry, flag_regex)
 	}
-	if *sla_ip != "" {
-		ApplySlaTag(&entry, sla_ip)
-	}
+	ApplyLibcLeakTag(&entry)
 	// Finally, insert the new entry
 	g_db.InsertFlow(entry)
 }
@@ -78,15 +75,6 @@ func main() {
 		// if that didn't work, warn the user and continue
 		if *flag_regex == "" {
 			log.Print("WARNING; no flag regex found. No flag-in or flag-out tags will be applied.")
-		}
-	}
-
-	// If no flag regex was supplied via cli, check the env
-	if *sla_ip == "" {
-		*sla_ip = os.Getenv("SLA_IP")
-		// if that didn't work, warn the user and continue
-		if *sla_ip == "" {
-			log.Print("WARNING; no SLA IP found. No SLA tag will be applied.")
 		}
 	}
 

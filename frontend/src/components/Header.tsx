@@ -151,6 +151,13 @@ function useMessyTimeStuff() {
     setTimeParam(endTick.toString(), END_FILTER_KEY);
   }
 
+  function clearTicks() {
+    // Lmao what is this
+    // I seriously cant code frontend - Zafirr
+    setTimeParam("-100000000", START_FILTER_KEY);
+    setTimeParam("100000000", END_FILTER_KEY);
+  }
+
   return {
     unixTimeToTick,
     startDate,
@@ -160,6 +167,7 @@ function useMessyTimeStuff() {
     endTick,
     currentTick,
     setToLastnTicks,
+    clearTicks,
   };
 }
 
@@ -275,12 +283,12 @@ function Diff() {
 
 export function Header() {
   let [searchParams] = useSearchParams();
-  const { setToLastnTicks, currentTick } = useMessyTimeStuff();
+  const { setToLastnTicks, currentTick, clearTicks } = useMessyTimeStuff();
 
   return (
     <>
       <Link to={`/?${searchParams}`}>
-        <div className="header-icon">🌷</div>
+        <div className="header-icon">🌸</div>
       </Link>
       <div>
         <TextSearch></TextSearch>
@@ -302,6 +310,14 @@ export function Header() {
           onClick={() => setToLastnTicks(5)}
         >
           Last 5 ticks
+        </button>
+      </div>
+      <div>
+        <button
+          className=" bg-cyan-200 text-gray-800 rounded-md px-2 py-1"
+          onClick={() => clearTicks()}
+        >
+          Clear
         </button>
       </div>
       <Link to={`/corrie?${searchParams}`}>

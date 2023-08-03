@@ -4,6 +4,7 @@ import (
 	"go-importer/internal/pkg/db"
 	"log"
 	"regexp"
+	"strings"
 )
 
 var flagRegex *regexp.Regexp
@@ -56,21 +57,18 @@ func ApplyFlagTags(flow *db.FlowEntry, reg *string) {
 	}
 }
 
-// Apply Sla Tag for packets with source ip of SLA
-func ApplySlaTag(flow *db.FlowEntry, sla_ip *string) {
+// Apply Libc Leak Tag for packets that may have libc leak
+func ApplyLibcLeakTag(flow *db.FlowEntry) {
+	
+	for idx := 0; idx < len(flow.Flow); idx++ {
+		flowItem := &flow.Flow[idx]
+		if strings.Contains(flowItem.Data, "\x7f") {
 
-	// If the sla ip is non existent, bail
-	if sla_ip == nil {
-		return
-	}
-
-	if flow.Src_ip == *sla_ip {
-		flow.Tags = append(flow.Tags, "sla")
+			tag := "libc-leak"
+			// Add the tag if it doesn't already exist
+			if !containsTag(flow.Tags, tag) {
+				flow.Tags = append(flow.Tags, tag)
+			}
+		}
 	}
 }
-
-// TODO: other tags
-// Plan: 
-// 		seperate HTTP and regular tcp
-// 		add a "libc leak" tag
-// 		some others idk

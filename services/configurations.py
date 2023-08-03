@@ -32,7 +32,9 @@ mongo_host = os.getenv("TULIP_MONGO", "localhost:27017")
 mongo_server = f'mongodb://{mongo_host}/'
 
 # Edit these to match each service
-services = [{"ip": "10.140.0.7", "port": 3003, "name": "closedsea"},
-            {"ip": "10.140.0.7", "port": 3004, "name": "closedsea"},
-            {"ip": "10.140.0.7", "port": 1337, "name": "rpn"},
+services = [{"ip": "10.60.4.1", "port": 1234, "name": "cyberuni_1234"},
+            {"ip": "10.61.4.1", "port": 1337, "name": "rpn_1337"},
+            {"ip": "10.62.4.1", "port": 1234, "name": "cyberuni_1234"},
+            {"ip": "10.63.4.1", "port": 1234, "name": "cyberuni_1234"},
+            {"ip": "10.64.4.1", "port": 1234, "name": "cyberuni_1234"},
 ]
